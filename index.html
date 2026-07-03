@@ -13,8 +13,135 @@ Made with love by Aru for Chuchu ❤️
     <title>Happy Birthday Chuchu ❤️</title>
 
     <link rel="stylesheet" href="css/style.css">
-
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* Modern Mobile Fixes directly balancing your layout frames */
+        body {
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        #book-cover {
+            padding: 20px 15px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cover {
+            width: 100%;
+            max-width: 500px;
+            background: rgba(15, 20, 35, 0.7);
+            border: 1px solid rgba(229, 193, 133, 0.25);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 24px;
+            padding: 40px 20px;
+            box-shadow: 0 40px 90px rgba(0, 0, 0, 0.6);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* Interactive Mobile Flow sub-screens */
+        .flow-slide {
+            display: none;
+            width: 100%;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .flow-slide.active {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Typography spacing adjustments for phone screen lengths */
+        .main-title {
+            font-size: 2.8rem !important;
+            letter-spacing: 4px !important;
+            margin-bottom: 10px !important;
+        }
+
+        .story-path h2 {
+            font-size: 1.4rem !important;
+            letter-spacing: 2px !important;
+            color: #e5c185;
+            margin: 5px 0;
+        }
+
+        .cover-quote p {
+            font-size: 1.25rem !important;
+            line-height: 1.6 !important;
+            margin-bottom: 15px;
+        }
+
+        .cover-quote p:not(:first-child) {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.85rem !important;
+            color: #cca7bd;
+            font-style: normal;
+        }
+
+        /* Luxury Clean Flow Buttons */
+        .flow-btn {
+            background: transparent;
+            color: #e5c185;
+            border: 1px solid rgba(229, 193, 133, 0.4);
+            padding: 12px 35px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: auto;
+            min-width: 180px;
+        }
+
+        .flow-btn:active, .flow-btn:hover {
+            background: rgba(229, 193, 133, 0.1);
+            border-color: #e5c185;
+        }
+
+        /* Gift section alignment updates */
+        #gift-section {
+            padding: 20px 15px;
+        }
+
+        .gift-card {
+            width: 100%;
+            max-width: 500px;
+            padding: 40px 20px !important;
+            border-radius: 24px !important;
+        }
+
+        .gift-card h2 {
+            font-size: 1.8rem !important;
+            letter-spacing: 2px !important;
+        }
+
+        .gift-card p {
+            font-size: 1.15rem !important;
+            line-height: 1.7 !important;
+            margin-bottom: 4px;
+        }
+
+        #gift-box {
+            margin: 30px auto 15px auto !important;
+            width: 120px !important;
+            height: 120px !important;
+        }
+    </style>
 </head>
 <body>
 
@@ -35,45 +162,44 @@ Made with love by Aru for Chuchu ❤️
 
         <section class="cover">
 
-            <p class="chapter-zero reveal">Chapter Zero</p>
-
-            <p class="welcome-text reveal">Welcome To</p>
-
-            <h1 class="main-title reveal">Our Story</h1>
-
-            <div class="divider reveal">❦</div>
-
-            <div class="story-path reveal">
-                <p>From</p>
-
-                <h2>"OM & Aparna"</h2>
-
-                <span class="arrow">↓</span>
-
-                <h2>"Husband & Wife"</h2>
+            <!-- SLIDE 1: Intro Titles -->
+            <div id="slide-intro" class="flow-slide active">
+                <p class="chapter-zero reveal">Chapter Zero</p>
+                <p class="welcome-text reveal">Welcome To</p>
+                <h1 class="main-title reveal">Our Story</h1>
+                <div class="divider reveal">❦</div>
+                <button class="flow-btn" onclick="changeSlide('slide-intro', 'slide-path')">Read Prologue</button>
             </div>
 
-            <div class="divider reveal">❦</div>
-
-            <div class="story-path reveal">
-                <p>Six Months Of Us</p>
-
-                <h2>A Beautiful Journey</h2>
-
-                <span class="arrow">↓</span>
+            <!-- SLIDE 2: The Relationship Path Structure -->
+            <div id="slide-path" class="flow-slide">
+                <div class="story-path reveal">
+                    <p>From</p>
+                    <h2>"OM & Aparna"</h2>
+                    <span class="arrow">↓</span>
+                    <h2>"Husband & Wife"</h2>
+                </div>
+                <div class="divider reveal">❦</div>
+                <div class="story-path reveal">
+                    <p>Six Months Of Us</p>
+                    <h2>A Beautiful Journey</h2>
+                    <span class="arrow">↓</span>
+                </div>
+                <button class="flow-btn" onclick="changeSlide('slide-path', 'slide-warnings')">Continue</button>
             </div>
 
-            <div class="cover-quote reveal">
-                <p>"Click ahead... every page has a little piece of my heart waiting for you. 🫶"</p>
-
-                <p>Warning: This website contains an unhealthy amount of love for one very special birthday boy...</p>
-
-                <p>...and the drama king who owns my heart. ❤️</p>
+            <!-- SLIDE 3: Dedication Warnings and Entry -->
+            <div id="slide-warnings" class="flow-slide">
+                <div class="cover-quote reveal">
+                    <p>"Click ahead... every page has a little piece of my heart waiting for you. 🫶"</p>
+                    <p>Warning: This website contains an unhealthy amount of love for one very special birthday boy...</p>
+                    <p>...and the drama king who owns my heart. ❤️</p>
+                </div>
+                <!-- This links straight into your original script trigger config -->
+                <button id="open-cover-btn" class="flow-btn" style="background: linear-gradient(135deg, #e5c185, #cfa35f); color: #111524; font-weight:600; border:none;">
+                    Open Our Book
+                </button>
             </div>
-
-            <button id="open-cover-btn">
-                Open Our Book
-            </button>
 
         </section>
 
@@ -91,17 +217,13 @@ Made with love by Aru for Chuchu ❤️
             <br>
 
             <p>Every birthday deserves a gift.</p>
-
             <p>I kept thinking...</p>
-
             <p>"What could I possibly give someone who already means so much to me?"</p>
 
             <br>
 
             <p>Then I realized...</p>
-
             <p>I couldn't wrap six months of memories inside a box.</p>
-
             <p>But I could preserve them.</p>
 
             <br>
@@ -111,7 +233,6 @@ Made with love by Aru for Chuchu ❤️
             <br>
 
             <p>This isn't every moment we've shared.</p>
-
             <p>It isn't every laugh, every late-night chat, or every smile you've given me.</p>
 
             <br>
@@ -127,17 +248,11 @@ Made with love by Aru for Chuchu ❤️
             <p>Ready to read our story?</p>
 
             <div id="gift-box">
-
                 <div class="gift-lid"></div>
-
                 <div class="gift-body">
-
                     <div class="gift-ribbon vertical"></div>
-
                     <div class="gift-ribbon horizontal"></div>
-
                 </div>
-
             </div>
 
             <p style="font-size:0.95rem;opacity:.8;margin-top:10px;">
@@ -162,6 +277,27 @@ Made with love by Aru for Chuchu ❤️
     <!-- JAVASCRIPT -->
     <!-- ========================= -->
     <script src="js/script.js"></script>
+
+    <!-- Slide Navigation Controller script -->
+    <script>
+        function changeSlide(currentId, nextId) {
+            const currentSlide = document.getElementById(currentId);
+            const nextSlide = document.getElementById(nextId);
+            
+            currentSlide.style.opacity = '0';
+            currentSlide.style.transform = 'translateY(-10px)';
+            
+            setTimeout(() => {
+                currentSlide.classList.remove('active');
+                nextSlide.classList.add('active');
+                
+                setTimeout(() => {
+                    nextSlide.style.opacity = '1';
+                    nextSlide.style.transform = 'translateY(0)';
+                }, 50);
+            }, 400);
+        }
+    </script>
 
 </body>
 </html>
