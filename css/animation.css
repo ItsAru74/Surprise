@@ -1,0 +1,119 @@
+/* =====================================
+   FADE IN ANIMATION
+===================================== */
+
+.fade-in{
+    animation:fadeIn 1s ease forwards;
+}
+
+@keyframes fadeIn{
+
+    from{
+        opacity:0;
+        transform:translateY(25px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+/* =====================================
+   STAGGER REVEAL
+===================================== */
+
+.reveal{
+
+    opacity:0;
+    transform:translateY(30px);
+
+}
+
+.reveal.show{
+
+    animation:revealAnimation .8s ease forwards;
+
+}
+
+@keyframes revealAnimation{
+
+    from{
+
+        opacity:0;
+        transform:translateY(30px);
+
+    }
+
+    to{
+
+        opacity:1;
+        transform:translateY(0);
+
+    }
+
+}
+
+/* =====================================
+   BOOK OPENING
+===================================== */
+
+.book{
+
+    width:260px;
+    height:180px;
+
+    background:white;
+
+    border:3px solid #D8C4A5;
+
+    border-radius:8px;
+
+    position:relative;
+
+    box-shadow:0 20px 40px rgba(0,0,0,.18);
+
+    animation:bookOpen 1.8s ease;
+
+}
+
+.book::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:50%;
+
+    width:3px;
+
+    height:100%;
+
+    background:#d4b98b;
+
+}
+
+@keyframes bookOpen{
+
+    0%{
+
+        transform:scale(.85);
+        opacity:0;
+
+    }
+
+    50%{
+
+        transform:scale(1.05);
+
+    }
+
+    100%{
+
+        transform:scale(1);
+        opacity:1;
+
+    }
+
+}

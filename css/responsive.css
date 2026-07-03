@@ -1,0 +1,58 @@
+/* ==========================================
+        GLOBAL RESPONSIVE STYLES
+========================================== */
+
+/* Tablet Screens */
+@media (max-width: 900px) {
+    .cover {
+        padding: 60px 50px;
+        width: 88%;
+    }
+    
+    .main-title {
+        font-size: 4rem;
+        letter-spacing: 5px;
+    }
+    
+    .cover-quote p {
+        font-size: 2rem;
+    }
+}
+
+/* Mobile Screens */
+@media (max-width: 600px) {
+    .cover {
+        padding: 50px 25px;
+        width: 92%;
+        min-height: 80vh;
+    }
+    
+    .main-title {
+        font-size: 2.6rem;
+        margin-bottom: 20px;
+        letter-spacing: 4px;
+        line-height: 1.3;
+    }
+    
+    .story-path h2 {
+        font-size: 1.6rem;
+        letter-spacing: 2px;
+    }
+    
+    .cover-quote p {
+        font-size: 1.6rem;
+        line-height: 1.7;
+    }
+    
+    button {
+        padding: 18px 45px;
+        font-size: 0.9rem;
+        margin-top: 35px;
+        letter-spacing: 2px;
+    }
+
+    .loader-content h1 {
+        font-size: 2.2rem;
+        letter-spacing: 3px;
+    }
+}
