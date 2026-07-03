@@ -3,9 +3,43 @@ document.addEventListener("DOMContentLoaded", () => {
     const progressBar = document.getElementById("progressBar");
     const chapters = document.querySelectorAll(".chapter");
 
+    // ==========================================
+    // AUDIO CONTINUITY (fixes music restarting
+    // when moving between pages, e.g. story.html
+    // -> ending.html). We read/write the current
+    // playback position from sessionStorage so
+    // each new page's <audio> element resumes
+    // instead of starting over at 0:00.
+    // ==========================================
+    function restoreAudioTime() {
+        if (!bgMusic) return;
+        const saved = sessionStorage.getItem("bgMusicTime");
+        if (!saved) return;
+        const t = parseFloat(saved);
+        if (isNaN(t) || t <= 0) return;
+
+        if (bgMusic.readyState >= 1) {
+            bgMusic.currentTime = t;
+        } else {
+            bgMusic.addEventListener("loadedmetadata", () => {
+                bgMusic.currentTime = t;
+            }, { once: true });
+        }
+    }
+
+    function saveAudioTime() {
+        if (!bgMusic) return;
+        sessionStorage.setItem("bgMusicTime", bgMusic.currentTime);
+    }
+
     if (bgMusic) {
         bgMusic.volume = 0.13; // Set a gentle background music volume
-        
+        restoreAudioTime();
+
+        bgMusic.addEventListener("timeupdate", saveAudioTime);
+        window.addEventListener("pagehide", saveAudioTime);
+        window.addEventListener("beforeunload", saveAudioTime);
+
         // 1. Try to play the music automatically first
         let playPromise = bgMusic.play();
 
@@ -14,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 // 2. If the browser blocks it, inject a sleek, floating play button
                 const playBtn = document.createElement("button");
                 playBtn.innerHTML = "🎵 Tap to play music";
-                
+
                 // Style the button via JS so you don't need to touch CSS
                 playBtn.style.position = "fixed";
                 playBtn.style.bottom = "30px";
@@ -50,11 +84,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 playBtn.addEventListener("click", () => {
                     bgMusic.play().catch(err => console.log("Audio still blocked:", err));
                     playBtn.style.opacity = "0";
-                    setTimeout(() => playBtn.remove(), 500); 
+                    setTimeout(() => playBtn.remove(), 500);
                 });
             });
         }
     }
+
+    // Save position right before navigating to another chapter/page
+    document.querySelectorAll('a[href$=".html"]').forEach(link => {
+        link.addEventListener("click", saveAudioTime);
+    });
 
     // Smooth Scroll Reveal for Chapters
     function revealChapters() {
@@ -71,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     window.addEventListener("scroll", revealChapters);
-    
+
     // Trigger immediately so the first chapter is visible
-    setTimeout(revealChapters, 150); 
+    setTimeout(revealChapters, 150);
 });
