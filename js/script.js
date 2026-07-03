@@ -1,6 +1,6 @@
 /*
 ===========================================
-OUR STORY ❤️ - CORE COVER SCRIPT 
+OUR STORY ❤️ - CORE COVER SCRIPT
 Handles Loader, Transitions, and Audio Playback
 ===========================================
 */
@@ -12,6 +12,42 @@ document.addEventListener("DOMContentLoaded", () => {
     const giftSection = document.getElementById("gift-section");
     const giftBox = document.getElementById("gift-box");
     const bgMusic = document.getElementById("bg-music");
+
+    // ==========================================
+    // AUDIO CONTINUITY (fixes music restarting
+    // when moving between pages). We store the
+    // current playback position in sessionStorage
+    // so the next page's <audio> element can pick
+    // up from where this one left off.
+    // ==========================================
+    function restoreAudioTime() {
+        if (!bgMusic) return;
+        const saved = sessionStorage.getItem("bgMusicTime");
+        if (!saved) return;
+        const t = parseFloat(saved);
+        if (isNaN(t) || t <= 0) return;
+
+        if (bgMusic.readyState >= 1) {
+            bgMusic.currentTime = t;
+        } else {
+            bgMusic.addEventListener("loadedmetadata", () => {
+                bgMusic.currentTime = t;
+            }, { once: true });
+        }
+    }
+
+    function saveAudioTime() {
+        if (!bgMusic) return;
+        sessionStorage.setItem("bgMusicTime", bgMusic.currentTime);
+    }
+
+    if (bgMusic) {
+        bgMusic.volume = 0.13;
+        restoreAudioTime();
+        bgMusic.addEventListener("timeupdate", saveAudioTime);
+        window.addEventListener("pagehide", saveAudioTime);
+        window.addEventListener("beforeunload", saveAudioTime);
+    }
 
     // 1. Remove Preloader and fade in Cover Page
     setTimeout(() => {
@@ -44,7 +80,6 @@ document.addEventListener("DOMContentLoaded", () => {
         giftBox.addEventListener("click", () => {
             // Unmute and play background music safely
             if (bgMusic) {
-                bgMusic.volume = 0.2; // Sweet, ambient background level
                 bgMusic.play().catch((err) => {
                     console.log("Audio play request was blocked by browser policies: ", err);
                 });
@@ -53,6 +88,9 @@ document.addEventListener("DOMContentLoaded", () => {
             // Small delay for natural transition effects before landing on story page
             giftBox.style.transform = "scale(0.9) rotate(-5deg)";
             setTimeout(() => {
+                // Save the exact spot the music is at right before navigating away,
+                // so story.html can resume from here instead of restarting.
+                saveAudioTime();
                 window.location.href = "story.html";
             }, 400);
         });
